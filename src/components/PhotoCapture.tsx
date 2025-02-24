@@ -1,3 +1,58 @@
+1;
+2;
+3;
+4;
+5;
+6;
+7;
+8;
+9;
+10;
+11;
+12;
+13;
+14;
+15;
+16;
+17;
+18;
+19;
+20;
+21;
+22;
+23;
+24;
+25;
+26;
+27;
+28;
+29;
+30;
+31;
+32;
+33;
+34;
+35;
+36;
+37;
+38;
+39;
+40;
+41;
+42;
+43;
+44;
+45;
+46;
+47;
+48;
+49;
+50;
+51;
+52;
+53;
+54;
+55;
 import React, { useState, useRef } from "react";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
@@ -13,10 +68,13 @@ const PhotoCapture: React.FC = () => {
 
   const handleUpload = async () => {
     if (photoRef.current) {
-      const canvas = await html2canvas(photoRef.current);
+      const canvas = await html2canvas(photoRef.current, { useCORS: true });
       const image = canvas.toDataURL("image/png");
-      console.log("Captured Image with Stickers:", image); // Replace with upload logic
-      alert("Image captured with stickers (check console)");
+
+      const link = document.createElement("a");
+      link.href = image;
+      link.download = "photo_with_stickers.png"; // File name
+      link.click();
     }
   };
 
@@ -34,13 +92,12 @@ const PhotoCapture: React.FC = () => {
         </>
       ) : (
         <div className="flex flex-col items-center w-full relative">
-          {/* Photo */}
+          {/* Photo and Stickers Wrapper */}
           <div ref={photoRef} className="relative w-full max-w-sm z-10">
             <img src={photo} alt="Captured" className="rounded-lg w-full" />
+            {/* Stickers Component */}
+            <Stickers photo={photo} />
           </div>
-
-          {/* Stickers Component */}
-          <Stickers photo={photo} photoRef={photoRef} />
 
           {/* Upload & Retake Buttons */}
           <SendButton handleUpload={handleUpload} setPhoto={setPhoto} />

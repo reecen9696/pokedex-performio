@@ -22,10 +22,9 @@ interface Sticker {
 
 interface StickersProps {
   photo: string | null;
-  photoRef: RefObject<HTMLDivElement>;
 }
 
-export const Stickers: React.FC<StickersProps> = ({ photo, photoRef }) => {
+export const Stickers: React.FC<StickersProps> = ({ photo }) => {
   const [addedStickers, setAddedStickers] = useState<Sticker[]>([]);
   const [isAddingSticker, setIsAddingSticker] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
@@ -82,7 +81,7 @@ export const Stickers: React.FC<StickersProps> = ({ photo, photoRef }) => {
 
           {/* Sticker selection popup */}
           {isAddingSticker && (
-            <div className="fixed top-20 right-4 bg-white rounded-lg p-4 z-50">
+            <div className="fixed top-20 right-4 bg-white rounded-lg p-4 z-50 shadow-lg">
               <p className="text-sm font-semibold mb-2">Select a sticker:</p>
               <div className="flex gap-2">
                 {availableStickers.map((sticker) => (
@@ -98,7 +97,7 @@ export const Stickers: React.FC<StickersProps> = ({ photo, photoRef }) => {
             </div>
           )}
 
-          {/* Stickers */}
+          {/* Stickers Layer */}
           <div className="fixed inset-0 pointer-events-none z-50">
             {addedStickers.map((sticker, index) => (
               <Rnd
