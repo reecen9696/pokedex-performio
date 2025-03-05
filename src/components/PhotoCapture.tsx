@@ -1,58 +1,3 @@
-1;
-2;
-3;
-4;
-5;
-6;
-7;
-8;
-9;
-10;
-11;
-12;
-13;
-14;
-15;
-16;
-17;
-18;
-19;
-20;
-21;
-22;
-23;
-24;
-25;
-26;
-27;
-28;
-29;
-30;
-31;
-32;
-33;
-34;
-35;
-36;
-37;
-38;
-39;
-40;
-41;
-42;
-43;
-44;
-45;
-46;
-47;
-48;
-49;
-50;
-51;
-52;
-53;
-54;
-55;
 import React, { useState, useRef } from "react";
 import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
@@ -68,13 +13,42 @@ const PhotoCapture: React.FC = () => {
 
   const handleUpload = async () => {
     if (photoRef.current) {
-      const canvas = await html2canvas(photoRef.current, { useCORS: true });
-      const image = canvas.toDataURL("image/png");
+      try {
+        // Convert the captured image + stickers into Base64
+        const canvas = await html2canvas(photoRef.current, {
+          useCORS: true,
+          allowTaint: true,
+        });
+        const imageBase64 = canvas.toDataURL("image/png").split(",")[1]; // Remove data type prefix
 
-      const link = document.createElement("a");
-      link.href = image;
-      link.download = "photo_with_stickers.png"; // File name
-      link.click();
+        const fileName = `photo-${Date.now()}.png`;
+
+        // Send to backend
+        const response = await fetch(
+          "https://zpg9th2oxe.execute-api.ap-southeast-2.amazonaws.com/Prod/upload",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              fileName: fileName,
+              fileContent: imageBase64,
+            }),
+          }
+        );
+
+        const result = await response.json();
+        if (response.ok) {
+          alert(`Upload successful! File: ${result.fileName}`);
+          setPhoto(null); // ✅ Reset photo so user can take a new one
+        } else {
+          throw new Error(result.message || "Upload failed.");
+        }
+      } catch (error) {
+        console.error("Upload error:", error);
+        alert("Failed to upload the image.");
+      }
     }
   };
 
