@@ -1,10 +1,10 @@
 import React from "react";
-import PhotoCapture from "./components/PhotoCapture";
+import Home from "./pages/home";
 
 const App: React.FC = () => {
   return (
     <div className="bg-white">
-      <PhotoCapture />
+      <Home />
     </div>
   );
 };
