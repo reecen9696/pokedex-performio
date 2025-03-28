@@ -15,7 +15,7 @@ Please see my submission for the Pokedex take home test
 2. npm run dev
 
 ```bash
-  npm install
+npm install
 ```
 
 ![Screenshot](public/screenshot.png)
