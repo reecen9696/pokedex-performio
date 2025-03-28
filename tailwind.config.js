@@ -2,130 +2,46 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
-      fontFamily: {
-        inter: ["var(--font-inter)"],
-        syne: ["var(--font-syne)"],
-      },
-      backgroundImage: {
-        "gradient-radial-light":
-          "radial-gradient(circle, var(--tw-gradient-stops))",
-        "gradient-radial-dark":
-          "radial-gradient(circle, var(--tw-gradient-stops))",
-      },
       colors: {
-        a: {
-          fluo: "#B3CF3D",
-          green: "#D0F603",
-          pnlGreen: "#40b66b",
-          pnlRed: "#ff5f52",
-          charcoal: "#0c0c0c",
-          gray: "#7d7d7d",
-          social: "#4B4D51", // Social links
-          positive: "#007902", // Positive numbers
-          connected: "#65FB9E", // Connected status green
+        ui: {
+          background: "#A0BAC6",
+          card: {
+            base: "#C5D4DD",
+            selected: "#567E94",
+            hover: "#EFF4F5",
+          },
+          number: {
+            base: "#DBE5EB",
+            hover: "#F6F7F9",
+            selected: "#A8B6BE",
+          },
+          pokemonCounter: {
+            background: "#567E94",
+            outline: "#FFFFFF",
+          },
+          image: {
+            base: "#DBE5EB",
+            selected: "#A0BAC6",
+          },
         },
-        dark: {
-          100: "#000000",
-          200: "#0F1117",
-          300: "#151821",
-          400: "#212734",
-          500: "#101012",
-          bgMain: "#0C1010", // Page background
-          tokenAmount: "#161A1B", // Token banner text
-          stroke: "#2F2F2F", // Div strokes
-          divBg: "#161A1B", // Div backgrounds
-          tableHeader: "#242626", // Table header background,
-          connectedbg: "rgba(181, 254, 185, 0.1)", // 10% opacity
-          connectedtext: "#B5FEB9", // 100% opacity
-        },
-        textShadow: {
-          "a-fluo": "0 0 8px rgba(179, 207, 61, 1)",
-          none: "none",
-        },
-        backgroundImage: {
-          ramp: "url(../public/assets/images/rampx-bg.png)",
-          code: "url(../public/assets/images/codebgstatic.png)",
-        },
-        // SHADCN Classes
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
-        },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
-        },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-        custom: "16px", // Custom rounded corners
       },
       keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
+        pulse: {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%": { transform: "scale(1.05)" },
         },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        scroll: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-100%)" },
-        },
-        blink: {
-          "0%, 100%": {
-            "background-color": "transparent",
-            color: "#B3CF3D",
-          },
-          "50%": {
-            "background-color": "#B3CF3D",
-            color: "black",
-          },
+        shake: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "25%": { transform: "translateX(-5px)" },
+          "75%": { transform: "translateX(5px)" },
         },
       },
       animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        blink: "blink 2s infinite",
-        scroll: "scroll 200s linear infinite",
+        pulse: "pulse 2s ease-in-out infinite",
+        shake: "shake 0.2s ease-in-out",
       },
     },
   },
-  plugins: [require("tailwind-scrollbar-hide")],
+  plugins: [],
 };

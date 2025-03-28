@@ -1,11 +1,54 @@
-// Use axios
-// Use an interface! Use the interfact w/UseState to store the object
-// Use "https://jsonplaceholder.typicode.com/users"
-// Render a turnary  {loading ? ( <p> Loading...</p> ) : ()
-// You'll need a map  {item.map((item) => ( <li key={item.key}>   {item.value}  </li>  ))}
+import { useEffect, useState } from "react";
+import { fetchPokemonList } from "../services/api";
+import { Pokemon } from "../types/pokemon";
+import { Counter } from "../components/Counter";
+import { PokemonGrid } from "../components/Grid";
 
-import React from "react";
+const Home = () => {
+  const [pokemon, setPokemonList] = useState<Pokemon[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selected, setSelected] = useState<number[]>([]);
+  const [shakeId, setShakeId] = useState<number | null>(null);
 
-export const home = () => {
-  return <div>home</div>;
+  useEffect(() => {
+    fetchPokemonList()
+      .then(setPokemonList)
+      .catch((error) => {
+        console.error("Failed to fetch Pokémon:", error);
+      })
+      .finally(() => setLoading(false));
+  }, []);
+
+  const triggerShake = (id: number) => {
+    setShakeId(id);
+    setTimeout(() => setShakeId(null), 500);
+  };
+
+  const toggleSelected = (id: number) => {
+    setSelected((prev) => {
+      const isSelected = prev.includes(id);
+      const canSelectMore = prev.length < 6;
+
+      if (isSelected) return prev.filter((pid) => pid !== id);
+      if (canSelectMore) return [...prev, id];
+
+      triggerShake(id);
+      return prev;
+    });
+  };
+
+  return (
+    <div className="lg:px-44 px-12 md:px-14 pt-8 bg-ui-background">
+      <PokemonGrid
+        loading={loading}
+        pokemon={pokemon}
+        selected={selected}
+        toggleSelected={toggleSelected}
+        shakeId={shakeId}
+      />
+      <Counter selected={selected} />
+    </div>
+  );
 };
+
+export default Home;
